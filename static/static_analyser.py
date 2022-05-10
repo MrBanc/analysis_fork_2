@@ -128,12 +128,10 @@ def main():
             if k in syscalls_set:
                 print_verbose("{} : {}".format(k,v))
 
-    print_verbose("Total number of syscalls: ", end="")
-    print_verbose(len(syscalls_set))
+    print_verbose("Total number of syscalls: " + str(len(syscalls_set)))
 
     if args.csv:
         print(args.app + "," + str(len(syscalls_set)))
-
 
 if __name__== "__main__":
     main()  
