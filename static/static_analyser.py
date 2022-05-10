@@ -2,6 +2,7 @@ import os
 import re
 import csv
 import lief
+import sys
 import json
 import argparse
 
