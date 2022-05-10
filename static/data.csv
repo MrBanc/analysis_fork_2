@@ -1,4 +1,4 @@
-app;#syscalls(static)
+app,#syscalls(static)
 haproxy,106
 lighttpd,105
 memcached,105
