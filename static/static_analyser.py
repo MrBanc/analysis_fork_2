@@ -11,6 +11,7 @@ from capstone import *
 
 verbose = False
 
+CSV          = "data.csv"
 TEXT_SECTION = ".text"
 APP          = "redis-server-static"
 
@@ -103,19 +104,20 @@ def main():
     parser.add_argument('--app','-a', help='Path to application',required=True, default=APP)
     parser.add_argument('--verbose', '-v', type=str2bool, nargs='?', const=True, help='Verbose mode', default=True)
     parser.add_argument('--display', '-d', type=str2bool, nargs='?', const=True, help='Display syscalls', default=True)
+    parser.add_argument('--csv', '-c', type=str2bool, nargs='?', const=True, help='Output csv', default=True)
     args = parser.parse_args()
 
     verbose = args.verbose
     binary = lief.parse(args.app)
     
-    print("Analysing the ELF file. This may take some times...")
+    print_verbose("Analysing the ELF file. This may take some times...")
     syscalls_set = set()
     for sect_it in [binary.dynamic_symbols, binary.static_symbols, binary.symbols]:
         detect_syscalls(sect_it, syscalls_set, syscalls_map)
 
     text_section = binary.get_section(TEXT_SECTION)
     if text_section is None:
-        print("[ERROR] Text section is not found.")
+        sys.write("[ERROR] Text section is not found.")
         sys.exit(1)
 
     inv_syscalls_map = {syscalls_map[k] : k for k in syscalls_map}
@@ -124,10 +126,14 @@ def main():
     if args.display:
         for k,v in syscalls_map.items():
             if k in syscalls_set:
-                print("{} : {}".format(k,v))
+                print_verbose("{} : {}".format(k,v))
 
-    print("Total number of syscalls: ", end="")
-    print(len(syscalls_set))
+    print_verbose("Total number of syscalls: ", end="")
+    print_verbose(len(syscalls_set))
+
+    if args.csv:
+        print(args.app + "," + str(len(syscalls_set)))
+
 
 if __name__== "__main__":
     main()  
