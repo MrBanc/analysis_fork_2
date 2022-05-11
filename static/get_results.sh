@@ -1,5 +1,5 @@
 #!/bin/bash
-CSV="data.csv"
+CSV="../data/static_data.csv"
 BIN="../bin/"
 declare -a array=("haproxy" "lighttpd" "memcached" "nginx" "redis-server" "sqlite3" "weborf")
 
