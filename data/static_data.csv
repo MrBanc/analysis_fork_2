@@ -1,8 +1,1 @@
 app,#syscalls(static)
-haproxy,106
-lighttpd,105
-memcached,105
-nginx,108
-redis-server,103
-sqlite3,83
-weborf,86

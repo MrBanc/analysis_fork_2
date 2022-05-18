@@ -131,10 +131,12 @@ def main():
     print_verbose("Total number of syscalls: " + str(len(syscalls_set)))
 
     if args.csv:
-        name = args.app
-        if "/" in name:
-            name = name.split("/")[-1]
-        print(name + "," + str(len(syscalls_set)))
+        print("# syscall, used")
+        for k,v in syscalls_map.items():
+            value = "N"
+            if k in syscalls_set:
+                value = "Y"
+            print("{},{}".format(v,value))
 
 if __name__== "__main__":
     main()  
